@@ -26,11 +26,6 @@ int _exe(op_t *obs)
 	}
 	else if (child_pid == 0)
 	{
-		if (i != 1)
-		{
-			perror(obs->name);
-			return (0);
-		}
 		if (execve(argv[0], argv, NULL) == -1)
 		{
 			perror(obs->name);
@@ -38,9 +33,7 @@ int _exe(op_t *obs)
 	}
 	else
 	{
-		do {
-			waitpid(child_pid, &sys, WUNTRACED);
-		} while (!WIFEXITED(sys) && !WIFSIGNALED(sys));
+		wait(&sys);
 	}
 	return (0);
 }
