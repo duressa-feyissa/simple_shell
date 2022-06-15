@@ -44,5 +44,5 @@ int main(int argc, char **argv, char **env)
 		}
 		free(ptr);
 	}
-	return (obs.exCo);
+	return (status);
 }
