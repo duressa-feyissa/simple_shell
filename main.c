@@ -44,5 +44,5 @@ int main(int argc, char **argv, char **env)
 		}
 		free(ptr);
 	}
-	return (status);
+	return (0);
 }

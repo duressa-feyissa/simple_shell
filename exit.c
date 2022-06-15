@@ -8,6 +8,6 @@
  */
 int exitfun(op_t *obs)
 {
-	obs->exCo = 0;
+	(void)obs;
 	return (200);
 }
