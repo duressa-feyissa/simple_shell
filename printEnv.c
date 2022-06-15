@@ -1,19 +1,24 @@
 #include "shell.h"
 
 /**
- * _getenv - prts env to standard output
+ * envfun - Print the environment variables.
+ * @obs: shell data.
  *
- * @env: enviroment
- *
+ * Return: Void
  */
-void _getenv(char **env)
-{
-	size_t run = 0;
 
-	while (env[run])
+int envfun(op_t *obs)
+{
+	char **env1;
+	int i;
+
+	env1 = obs->envn;
+	i = 0;
+	while (env1[i])
 	{
-		write(STDOUT_FILENO, env[run], _strlen(env[run]));
+		write(STDOUT_FILENO, env1[i], _strlen(env1[i]));
 		write(STDOUT_FILENO, "\n", 1);
-		run++;
+		i++;
 	}
+	return (0);
 }

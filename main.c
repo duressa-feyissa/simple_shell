@@ -11,6 +11,7 @@ int main(int argc, char **argv, char **env)
 {
 	int pathv = 0, status = 0, isPath = 0;
 	char *ptr = NULL, **cmds = NULL;
+	op_t obs;
 	(void)argc;
 	while (1)
 	{
@@ -24,20 +25,15 @@ int main(int argc, char **argv, char **env)
 			cmds = _strtoken(ptr);
 			if (cmds == NULL)
 				free(ptr);
-			if (!_strcmp(cmds[0], "env"))
-				_getenv(env);
-			else
+			isPath = valuePath(&cmds[0], env);
+			status = _forkfun(cmds, argv, env, ptr, pathv, isPath, &obs);
+			if (status == 200)
 			{
-				isPath = valuePath(&cmds[0], env);
-				status = _forkfun(cmds, argv, env, ptr, pathv, isPath);
-				if (status == 200)
-				{
-					free(ptr);
-					return (0);
-				}
-				if (isPath == 0)
-					free(cmds[0]);
+				free(ptr);
+				return (0);
 			}
+			if (isPath == 0)
+				free(cmds[0]);
 			free(cmds);
 		}
 		else
@@ -48,5 +44,5 @@ int main(int argc, char **argv, char **env)
 		}
 		free(ptr);
 	}
-	return (status);
+	return (obs.exCo);
 }

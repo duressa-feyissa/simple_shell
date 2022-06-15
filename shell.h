@@ -11,6 +11,35 @@
 #include <string.h>
 #include <errno.h>
 
+/**
+ * struct op - shell data for current session
+ *
+ * @argv: argument vector
+ * @cmd: input command
+ * @envn: env variables
+ * @name: ______
+ * @exCo: exit value
+ */
+typedef struct op
+{
+	char **argv;
+	char **envn;
+	char **cmd;
+	char *name;
+	int exCo;
+} op_t;
+
+/**
+ * struct new - struct data
+ * @s: string address holder
+ * @find: find builtin command
+ */
+typedef struct new
+{
+	char *s;
+	int (*find)(op_t *obs);
+} ph;
+
 /** String Handler**/
 int _strlen(char *s);
 char *_strcpy(char *dest, char *src);
@@ -27,11 +56,15 @@ char *_getPath(char **env);
 void _getenv(char **env);
 char **_strtoken(char *str);
 int valuePath(char **av, char **env);
-int _forkfun(char **cmd, char **av, char **env, char *lineptr, int np, int c);
+int _forkfun(char **cmd, char **av, char **en, char *l, int p, int c, op_t *o);
 
 /** Builtin **/
 int cdFun(char **args);
 int exitFun(char **args);
 int ctrld(char **args);
+
+int (*find(char *str))(op_t *obs);
+int exitfun(op_t *obs);
+int envfun(op_t *obs);
 
 #endif
