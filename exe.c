@@ -1,153 +1,137 @@
-#include "main.h"
+#include "shell.h"
+int lsh_cd(char **args);
+int lsh_help(char **args);
+int lsh_exit(char **args);
+int lsh_ctrld(char **args);
+
+/*
+ * List of builtin commands, followed by their corresponding functions.
+ */
+char *builtin_str[] = {"cd", "help", "exit", "^D"};
+
+int (*builtin_func[]) (char **) = {&lsh_cd, &lsh_help, &lsh_exit, &lsh_ctrld};
 
 /**
- * _whichPath - find the file for a command
- *
- * @obs: shell data
- * @command: command input
- * Return: 0 on failure otherwise 1
+ * lsh_num_builtins - size
+ * Return: size
  */
-char *_whichPath(op_t *obs, char *command)
+
+int lsh_num_builtins(void)
 {
-	char *str, *str_dup, *spath, *doc;
-	int len_spath, len_cmd;
-	struct stat st;
+	return (sizeof(builtin_str) / sizeof(char *));
+}
 
-	str = _getenv(obs, "PATH");
-	if (str == NULL)
-		return (NULL);
-	if (command[0] == '/')
-		if (stat(command, &st) == 0)
-			return (_strdup(command));
+/*
+ * Builtin function implementations.
+*/
 
-	str_dup = _strdup(str);
-	len_cmd = _strlen(command);
-	spath = strtok(str_dup, ":");
-	free(str);
-	while (spath)
+/**
+ * lsh_cd - builtin to change dirs
+ * @args: List of args.  args[0] is "cd".  args[1] is the directory.
+ * Return: 1 on success
+ */
+int lsh_cd(char **args)
+{
+	if (args[1] == NULL)
 	{
-		len_spath = _strlen(spath);
-		doc = malloc(sizeof(char) * (len_spath + len_cmd + 2));
-		if (doc == NULL)
-		{
-			free(str_dup);
-			write(STDERR_FILENO, ": allocation error\n", 18);
-			exit(EXIT_FAILURE);
-		}
-		_strcpy(doc, spath);
-		_strcat(doc, "/");
-		_strcat(doc, command);
-		_strcat(doc, "\0");
-		if (stat(doc, &st) == 0)
-		{
-			free(str_dup);
-			return (doc);
-		}
-		free(doc);
-		spath = strtok(NULL, ":");
+		fprintf(stderr, "hsh: expected argument to \"cd\"\n");
 	}
-	free(str_dup);
-	return (NULL);
+	else
+	{
+		if (chdir(args[1]) != 0)
+		{
+			perror("hsh");
+		}
+	}
+	return (1);
 }
 
 /**
- * check_exe - check if a path can be executed
- *
- * @str: path
- * Return: 0 on success otherwise 1
+ * lsh_help - prints the help for the shell
+ * @args: List of args.  Not examined.
+ * Return: Always returns 1, to continue executing.
  */
-int check_exe(char *str)
+int lsh_help(char **args)
 {
-	struct stat st;
 	int i;
 
-	i = 0;
-	while (str[i])
+	printf("Oscar Bedat and Andres Henderson\n");
+	printf("If you need help, call 1-800-help\n");
+	(void)args;
+	for (i = 0; i < lsh_num_builtins(); i++)
 	{
-		if (str[i] == '.')
-		{
-			if (str[i + 1] == '/')
-				i++;
-			else if (str[i + 1] == '.' && str[i + 2] == '/')
-				i = i + 2;
-			else
-				return (1);
-		}
-		i++;
+		printf("  %s\n", builtin_str[i]);
 	}
-	if (stat(str, &st) == 0)
-		return (0);
+
 	return (1);
 }
 
 /**
- * check_error - check_error function
- * @obs: shell data
- * @doc: file
- * Return: Success of execution
+ * lsh_exit - builtin to exit the shell
+ * @args: List of args.  Not examined.
+ * Return: Always returns 0, to terminate execution.
+ */
+int lsh_exit(char **args)
+{
+	(void)args;
+	free(args);
+	return (200);
+}
+
+/**
+ * lsh_ctrld - builtin to handle "^D" call
+ * @args: List of args.  Not examined.
+ * Return: Always returns 0, to terminate execution.
+ */
+int lsh_ctrld(char **args)
+{
+	(void)args;
+	free(args);
+	return (200);
+}
+
+/**
+ *_fork_fun - foo that create a fork.
+ *@arg: Command and values path.
+ *@av: Has the name of our program.
+ *@env: Environment
+ *@lineptr: Command line for the user.
+ *@np: ID of proces.
+ *@c: Checker add new test
+ *Return: 0 success
  */
 
-int check_error(op_t *obs, char *doc)
+int _fork_fun(char **arg, char **av, char **env, char *lineptr, int np, int c)
 {
-	if (!doc)
-	{
-		write_err(obs, 127);
+
+	pid_t child;
+	int status, i = 0;
+	char *format = "%s: %d: %s: not found\n";
+
+	if (arg[0] == NULL)
 		return (1);
+	for (i = 0; i < lsh_num_builtins(); i++)
+	{
+		if (_strcmp(arg[0], builtin_str[i]) == 0)
+			return (builtin_func[i](arg));
 	}
-	if (access(doc, X_OK) == -1)
+	child = fork();
+	if (child == 0)
 	{
-		write_err(obs, 126);
-		return (1);
+		if (execve(arg[0], arg, env) == -1)
+		{
+			fprintf(stderr, format, av[0], np, arg[0]);
+			if (!c)
+				free(arg[0]);
+			free(arg);
+			free(lineptr);
+			exit(errno);
+		}
+	}
+	else
+	{
+		wait(&status);
+		return (status);
 	}
 	return (0);
-}
-
-
-/**
- * _exe - execute the command
- * @obs: shell data
- *
- * Return: Success of execution
- */
-int _exe(op_t *obs)
-{
-	pid_t pid;
-	int status, fl;
-	char *doc;
-
-	fl = check_exe(obs->av[0]);
-	if (fl == 0)
-	{
-		doc = _strdup(obs->av[0]);
-	}
-	else
-	{
-		doc = _whichPath(obs, obs->av[0]);
-		if (!doc)
-		{
-			write_err(obs, 127);
-			return (1);
-		}
-	}
-	if (check_error(obs, doc) == 1)
-		return (1);
-	pid = fork();
-	if (pid < 0)
-	{
-		perror(obs->av[0]);
-		return (1);
-	}
-	else if (pid == 0)
-	{
-		execve(doc, obs->av, obs->env);
-	}
-	else
-	{
-		do {
-			waitpid(pid, &status, WUNTRACED);
-		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
-	}
-	free(doc);
-	obs->exCo = status / 256;
-	return (1);
 }

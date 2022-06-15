@@ -1,46 +1,21 @@
-#include "main.h"
+#include "shell.h"
+
 
 /**
- * _getenv - Searches for the environment string pointed to by name
- * @name: string containing the name of the requested variable.
- * @obs: shell data
- * Return: the associated value to the string or NULL
+ * _getenv - prts env to standard output
+ *
+ * @env: enviroment
+ *
  */
 
-char *_getenv(op_t *obs, const char *name)
+void _getenv(char **env)
 {
-	int i = 0, j = 0, k = 0, len1, len2;
-	char *new;
-	char **env;
+	size_t run = 0;
 
-	env = obs->env;
-	i = 0;
-	len1 = _strlen((void *)name);
-	while (env[i])
+	while (env[run])
 	{
-		j = _strncmp(env[i], (void *)name, len1);
-		if (j == 0 && (env[i][len1] == '='))
-		{
-			len2 = _strlen(env[i]);
-			new = malloc(sizeof(char) * (len2 - len1 + 1));
-			if (new == NULL)
-			{
-				free(new);
-				return (NULL);
-			}
-
-			j = len1 + 1;
-			k = 0;
-			while (env[i][j])
-			{
-				new[k] = env[i][j];
-				j++;
-				k++;
-			}
-			new[k] = '\0';
-			return (new);
-		}
-		i++;
+		write(STDOUT_FILENO, env[run], _strlen(env[run]));
+		write(STDOUT_FILENO, "\n", 1);
+		run++;
 	}
-	return (NULL);
 }
