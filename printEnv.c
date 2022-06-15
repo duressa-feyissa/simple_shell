@@ -1,13 +1,11 @@
 #include "shell.h"
 
-
 /**
  * _getenv - prts env to standard output
  *
  * @env: enviroment
  *
  */
-
 void _getenv(char **env)
 {
 	size_t run = 0;

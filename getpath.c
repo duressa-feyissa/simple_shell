@@ -1,30 +1,44 @@
 #include "shell.h"
+
 /**
- * _get_path - get variable PATH.
- * @env: enviromente local
- * Return: value of PATH.
+ * _getPath - find enviromental path
+ * @env: enviromental variable
+ *
+ * Return: enviromental path or NULL
  */
-
-char *_get_path(char **env)
+char *_getPath(char **env)
 {
-	size_t index = 0, var = 0, count = 5;
-	char *path = NULL;
+	int i = 0, j = 0, k = 0, len1, len2;
+	char *new, *name;
 
-	for (index = 0; _strncmp(env[index], "PATH=", 5); index++)
-		;
-	if (env[index] == NULL)
-		return (NULL);
+	i = 0;
+	name = "PATH";
+	len1 = _strlen(name);
+	while (env[i])
+	{
+		j = _strncmp(env[i], name, len1);
+		if (j == 0 && (env[i][len1] == '='))
+		{
+			len2 = _strlen(env[i]);
+			new = malloc(sizeof(char) * (len2 - len1 + 1));
+			if (new == NULL)
+			{
+				free(new);
+				return (NULL);
+			}
 
-	for (count = 5; env[index][var]; var++, count++)
-		;
-	path = malloc(sizeof(char) * (count + 1));
-
-	if (path == NULL)
-		return (NULL);
-
-	for (var = 5, count = 0; env[index][var]; var++, count++)
-		path[count] = env[index][var];
-
-	path[count] = '\0';
-	return (path);
+			j = len1 + 1;
+			k = 0;
+			while (env[i][j])
+			{
+				new[k] = env[i][j];
+				j++;
+				k++;
+			}
+			new[k] = '\0';
+			return (new);
+		}
+		i++;
+	}
+	return (NULL);
 }
