@@ -11,11 +11,11 @@ int main(int argc, char **argv, char **env)
 {
 	op_t obs;
 	(void)argc;
-	(void)env;
 
-	obs.av = NULL;
-	obs.name = argv[0];
+	start(&obs, argv, env);
+	signal(SIGINT, handle);
 	entry(&obs);
+	unstart(&obs);
 
-	return (0);
+	return (obs.exCo);
 }

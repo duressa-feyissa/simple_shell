@@ -19,7 +19,6 @@ int _strlen(char *s)
 	return (i);
 }
 
-
 /**
  * _strcpy - A function that prints half of a string.
  * @src: The pointer to the destination.

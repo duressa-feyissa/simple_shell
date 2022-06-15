@@ -114,3 +114,41 @@ int _atoi(char *s)
 	}
 	return (num);
 }
+
+/**
+ * _itoa - get the length of an integer
+ * @n: given integer
+ * Return: length of integer
+ */
+char *_itoa(int n)
+{
+	unsigned int n1;
+	int length = _intlen(n);
+	char *buffer;
+
+	buffer = malloc(sizeof(char) * (length + 1));
+	if (buffer == 0)
+		return (NULL);
+
+	*(buffer + length) = '\0';
+
+	if (n < 0)
+	{
+		n1 = n * -1;
+		buffer[0] = '-';
+	}
+	else
+	{
+		n1 = n;
+	}
+
+	length--;
+	do {
+		*(buffer + length) = (n1 % 10) + '0';
+		n1 = n1 / 10;
+		length--;
+	}
+	while (n1 > 0)
+		;
+	return (buffer);
+}

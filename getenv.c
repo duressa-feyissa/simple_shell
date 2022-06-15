@@ -15,13 +15,13 @@ char *_getenv(op_t *obs, const char *name)
 
 	env = obs->env;
 	i = 0;
-	len1 = strlen((void *)name);
+	len1 = _strlen((void *)name);
 	while (env[i])
 	{
-		j = strncmp(env[i], (void *)name, len1);
+		j = _strncmp(env[i], (void *)name, len1);
 		if (j == 0 && (env[i][len1] == '='))
 		{
-			len2 = strlen(env[i]);
+			len2 = _strlen(env[i]);
 			new = malloc(sizeof(char) * (len2 - len1 + 1));
 			if (new == NULL)
 			{

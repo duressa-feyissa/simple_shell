@@ -19,8 +19,10 @@
  * @av: argument vector
  * @cmd: input command
  * @env: env variables
- * @name: ______
+ * @name: the program name
  * @exCo: exit value
+ * @count: counts number of processes
+ * @pid: pid of current process
  */
 typedef struct op
 {
@@ -29,6 +31,8 @@ typedef struct op
 	char **env;
 	char *name;
 	int exCo;
+	int count;
+	char *pid;
 } op_t;
 
 /**
@@ -53,17 +57,13 @@ int _strcmp(char *s1, char *s2);
 size_t _strncmp(char *s1, char *s2, size_t n);
 int _isdigit(char *c);
 int _atoi(char *s);
-
-/** Find the path **/
-char *path(char **env);
-char **PATH(const char *env);
-void freePATH(char **new);
-void freepath(char *token);
+char *_itoa(int n);
+int _intlen(int n);
 
 /** Memory allocation **/
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 char *_strdup(char *str);
-
+char **_realloc2(char **ptr, unsigned int old_size, unsigned int new_size);
 
 char **_strtok(char *str);
 void start(op_t *obs, char **argv, char **env);
@@ -86,6 +86,15 @@ int _unsetenv(op_t *obs, const char *name);
 int h_unsetenv(op_t *obs);
 int h_setenv(op_t *obs);
 int cdfun(op_t *obs);
+
+/** signal handler **/
+void handle(int sig);
+
+/** error **/
+void error_message(op_t *obs, char *message, int status);
+void write_err(op_t *obs, int status);
+char *cd_error(op_t *obs);
+char *exit_error(op_t *obs);
 
 /** getline **/
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream);

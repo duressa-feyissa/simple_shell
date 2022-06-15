@@ -10,14 +10,26 @@
 int parse(op_t *obs, char *order)
 {
 	int fl;
+	int (*hold)(op_t *shell);
 
 	fl = 0;
 	obs->av = _strtok(order);
 	if (obs->av == NULL)
 	{
+		free(obs->cmd);
 		return (0);
 	}
-	fl = _exe(obs);
+
+	hold = find(obs->av[0]);
+	if (hold)
+		fl = hold(obs);
+	else
+		fl = 1;
+
+	if (fl == 1)
+		fl = _exe(obs);
+
 	free(obs->av);
+
 	return (fl);
 }
