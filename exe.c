@@ -16,11 +16,11 @@ int _forkfun(char **cmd, char **av, char **en, char *l, int p, int c, op_t *o)
 	pid_t child;
 	int status;
 	int (*hold)(op_t *shell);
-	char *format = "%s: %d: %s: not found\n";
 
 	o->argv = cmd;
 	o->envn = en;
 	o->exCo = 0;
+	o->count = p;
 	if (cmd[0] == NULL)
 		return (1);
 	hold = find(cmd[0]);
@@ -31,7 +31,7 @@ int _forkfun(char **cmd, char **av, char **en, char *l, int p, int c, op_t *o)
 	{
 		if (execve(cmd[0], cmd, en) == -1)
 		{
-			fprintf(stderr, format, av[0], p, cmd[0]);
+			perror(av[0]);
 			if (!c)
 				free(cmd[0]);
 			free(cmd);

@@ -19,6 +19,7 @@
  * @envn: env variables
  * @name: ______
  * @exCo: exit value
+ * @count: number of proess
  */
 typedef struct op
 {
@@ -27,6 +28,7 @@ typedef struct op
 	char **cmd;
 	char *name;
 	int exCo;
+	int count;
 } op_t;
 
 /**
@@ -59,12 +61,8 @@ int valuePath(char **av, char **env);
 int _forkfun(char **cmd, char **av, char **en, char *l, int p, int c, op_t *o);
 
 /** Builtin **/
-int cdFun(char **args);
-int exitFun(char **args);
-int ctrld(char **args);
-
 int (*find(char *str))(op_t *obs);
 int exitfun(op_t *obs);
 int envfun(op_t *obs);
-
+int ctrld(op_t *obs);
 #endif
