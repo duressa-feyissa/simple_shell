@@ -81,7 +81,7 @@ int _exe(op_t *obs);
 int (*find(char *str))(op_t *obs);
 int exitfun(op_t *obs);
 int envfun(op_t *obs);
-char *_getenv(op_t *obs, const char *name);
+char *_getenv(char **_environ, const char *name);
 int _setenv(op_t *obs, const char *name, const char *value, int overwrite);
 int add_env(op_t *obs, const char *name, const char *value);
 int _unsetenv(op_t *obs, const char *name);

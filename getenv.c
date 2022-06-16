@@ -1,46 +1,42 @@
 #include "main.h"
 
 /**
- * _getenv - Searches for the environment string pointed to by name
- * @name: string containing the name of the requested variable.
- * @obs: shell data
- * Return: the associated value to the string or NULL
+ * env_cmp - compares a name with env key
+ *
+ * @envvar: env variable
+ * @name: name to compare
+ *
+ * Return: 0 if not match else an integer
  */
-
-char *_getenv(op_t *obs, const char *name)
+int env_cmp(const char *envvar, const char *name)
 {
-	int i = 0, j = 0, k = 0, len1, len2;
-	char *new;
-	char **env;
+	unsigned int i;
 
-	env = obs->env;
-	i = 0;
-	len1 = _strlen((void *)name);
-	while (env[i])
+	for (i = 0; envvar[i] != '='; i++)
+		if (envvar[i] != name[i])
+			return (0);
+
+	return (++i);
+}
+
+/**
+ * _getenv - Gets the value of an environment variable
+ *
+ * @_environ: env variables
+ * @name: given name
+ * Return: the env variable if found otherwise NULL
+ */
+char *_getenv(char **_environ, const char *name)
+{
+	unsigned int i;
+	int offset;
+
+	for (i = 0; _environ[i]; i++)
 	{
-		j = _strncmp(env[i], (void *)name, len1);
-		if (j == 0 && (env[i][len1] == '='))
-		{
-			len2 = _strlen(env[i]);
-			new = malloc(sizeof(char) * (len2 - len1 + 1));
-			if (new == NULL)
-			{
-				free(new);
-				return (NULL);
-			}
-
-			j = len1 + 1;
-			k = 0;
-			while (env[i][j])
-			{
-				new[k] = env[i][j];
-				j++;
-				k++;
-			}
-			new[k] = '\0';
-			return (new);
-		}
-		i++;
+		offset = env_cmp(_environ[i], name);
+		if (offset)
+			return (_environ[i] + offset);
 	}
+
 	return (NULL);
 }

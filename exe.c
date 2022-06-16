@@ -13,7 +13,7 @@ char *_whichPath(op_t *obs, char *command)
 	int len_spath, len_cmd;
 	struct stat st;
 
-	str = _getenv(obs, "PATH");
+	str = _getenv(obs->env, "PATH");
 	if (str == NULL)
 		return (NULL);
 	if (command[0] == '/')
@@ -23,7 +23,6 @@ char *_whichPath(op_t *obs, char *command)
 	str_dup = _strdup(str);
 	len_cmd = _strlen(command);
 	spath = strtok(str_dup, ":");
-	free(str);
 	while (spath)
 	{
 		len_spath = _strlen(spath);
