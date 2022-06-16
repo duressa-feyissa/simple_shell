@@ -13,7 +13,6 @@ int main(int argc, char **argv)
 	op_t obs;
 
 	_envStart(&obs);
-	signal(SIGINT, handl_signint);
 	(void)argc;
 	while (status)
 	{
