@@ -103,4 +103,10 @@ char *exit_error(op_t *obs);
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
 void _fix(char **lineptr, size_t *n, char *ptr, size_t i);
 
+void prompt(void);
+char *read_line(int *chr);
+char **tokenize(char *s);
+char *analyze_cmd(op_t *obs, char *cmd);
+char *exp_variables(op_t *obs, char *s);
+
 #endif
