@@ -8,14 +8,14 @@
  */
 int main(int argc, char **argv)
 {
-	int pathv = 0, status = 0, isPath = 0;
+	int pathv = 0, status = 1, isPath = 0;
 	char *ptr = NULL, **cmds = NULL;
 	op_t obs;
 
 	_envStart(&obs);
 	signal(SIGINT, handl_signint);
 	(void)argc;
-	while (1)
+	while (status)
 	{
 		errno = 0;
 		ptr = _getcmd();
@@ -27,8 +27,8 @@ int main(int argc, char **argv)
 			cmds = _strtoken(ptr);
 			if (cmds == NULL)
 				free(ptr);
-			isPath = valuePath(&cmds[0], obs.envn);
-			status = _forkfun(cmds, argv, obs.envn, ptr, pathv, isPath, &obs);
+			isPath = valuePath(&cmds[0], environ);
+			status = _forkfun(cmds, argv, environ, ptr, pathv, isPath, &obs);
 			if (status == 200)
 			{
 				free(ptr);
