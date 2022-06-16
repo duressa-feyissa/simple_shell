@@ -15,7 +15,7 @@ void _envStart(op_t *obs)
 	while (environ[i])
 		i++;
 
-	obs->envn = malloc(sizeof(char *) * (i + 2));
+	obs->envn = malloc(sizeof(char *) * (i + 1));
 	if (obs->envn == NULL)
 	{
 		perror("Error");
