@@ -61,6 +61,7 @@ size_t _strncmp(char *s1, char *s2, size_t n);
 int _isdigit(char *c);
 int _atoi(char *s);
 
+void handl_signint(int sig);
 char *_getcmd(void);
 char *_getPath(char **env);
 void _getenv(char **env);
