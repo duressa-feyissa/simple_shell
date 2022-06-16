@@ -1,4 +1,5 @@
-#include "shell.h"
+#include "util.h"
+#include "string.h"
 
 /**
  * _realloc - reallocates a memory block.
@@ -40,40 +41,6 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 }
 
 /**
- * *_strdup - a function that duplicates a string
- *
- * @str: input string to duplicate
- *
- * Return: NULL if str == NULL
- *         @str
-*/
-
-char *_strdup(char *str)
-{
-	int i = 0, l = 0;
-	char *s;
-
-	if (str == NULL)
-		return (NULL);
-
-	/*calculate size of str*/
-	while (str[l] != '\0')
-		l++;
-
-	s = malloc((l + 1) * sizeof(char));
-	if (s == NULL)
-		return (NULL);
-
-	while (str[i] != '\0')
-	{
-		s[i] = str[i];
-		i++;
-	}
-
-	return (s);
-}
-
-/**
  * _realloc2 - reallocates a memory block of a double pointer.
  * @ptr: double pointer to the memory previously allocated.
  * @old_size: size, in bytes, of the allocated space of ptr.
@@ -104,24 +71,4 @@ char **_realloc2(char **ptr, unsigned int old_size, unsigned int new_size)
 	free(ptr);
 
 	return (newptr);
-}
-
-/**
- * _memcpy - copy memory area
- *
- * @dest: destination memory
- * @src: source memory
- * @n: bytes to copy
- * Return: pointer to the destination memory
- */
-void *_memcpy(void *dest, const void *src, size_t n)
-{
-	char *dest_ptr = (char *) dest;
-	char *src_ptr = (char *) src;
-	unsigned int i;
-
-	for (i = 0; i < n; i++)
-		dest_ptr[i] = src_ptr[i];
-
-	return (dest_ptr);
 }

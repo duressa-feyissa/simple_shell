@@ -1,5 +1,10 @@
-#ifndef _SHELL_
-#define _SHELL_
+#ifndef SHELL_H
+#define SHELL_H
+
+#define BUFSIZE 1024
+#define TOKEN_BUFSIZE 128
+#define TOKEN_DELIM " \t\r\n\a"
+#define EXIT_IND 2
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -8,88 +13,73 @@
 #include <sys/wait.h>
 #include <unistd.h>
 #include <signal.h>
-#include <string.h>
-#include <errno.h>
 
 /**
- * struct op - shell data for current session
+ * struct shell - shell data for current session
  *
  * @argv: argument vector
- * @cmd: input command
- * @envn: env variables
- * @name: ______
- * @exCo: exit value
- * @count: number of proess
+ * @command: input command
+ * @environ: env variables
+ * @name: the program name
+ * @count: counts number of processes
+ * @exitcode: the value the code exits
+ * @pid: pid of current process
  */
-typedef struct op
+typedef struct shell
 {
 	char **argv;
-	char **envn;
-	char **cmd;
+	char *command;
+	char **environ;
 	char *name;
-	int exCo;
 	int count;
-} op_t;
+	int exitcode;
+	char *pid;
+} shell_t;
 
 /**
- * struct new - struct data
- * @s: string address holder
- * @find: find builtin command
+ * struct builtin - builtins
+ *
+ * @name: name of builtin
+ * @handl: builtin handler
  */
-typedef struct new
+typedef struct builtin
 {
-	char *s;
-	int (*find)(op_t *obs);
-} ph;
+	char *name;
+	int (*handl)(shell_t *shell);
+} builtin_t;
 
 extern char **environ;
 
-/** Setenv and Unsetenv **/
-int _setenv(op_t *obs, char *name, char *value, int overwrite);
-int _unsetenv(op_t *obs, const char *name);
-char *_getdone(op_t *obs, const char *name);
-int add_env(op_t *obs, const char *name, const char *value);
-
-/** String Handler**/
-int _strlen(char *s);
-char *_strcpy(char *dest, char *src);
-char *_strncpy(char *dest, char *src, int n);
-char *_strcat(char *dest, char *src);
-char *_strncat(char *dest, char *src, int n);
-int _strcmp(char *s1, char *s2);
-size_t _strncmp(char *s1, char *s2, size_t n);
-int _isdigit(char *c);
-int _atoi(char *s);
-
+/* setup */
+void initialize(shell_t *shell, char **av);
+void uninitialize(shell_t *shell);
 void handl_signint(int sig);
-char *_getcmd(void);
-char *_getPath(char **env);
-void _getenv(char **env);
-char **_strtoken(char *str);
-int valuePath(char **av, char **env);
-int _forkfun(char **cmd, char **av, char **en, char *l, int p, int c, op_t *o);
-void _envStart(op_t *obs);
-char *_getdone(op_t *obs, const char *name);
-void unstart(op_t *obs);
+void repl(shell_t *shell);
 
-/** Builtin **/
-int (*find(char *str))(op_t *obs);
-int exitfun(op_t *obs);
-int h_setenv(op_t *obs);
-int envfun(op_t *obs);
-int ctrld(op_t *obs);
-int h_unsetenv(op_t *obs);
-int cdfun(op_t *obs);
+/* env */
+char *_getenv(char **_environ, const char *name);
+int _setenv(shell_t *shell, char *name, char *value, int overwrite);
 
-/** Memory **/
-char *_strdup(char *str);
-void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
-char **_realloc2(char **ptr, unsigned int old_size, unsigned int new_size);
-void *_memcpy(void *dest, const void *src, size_t n);
+/* executor */
+int parse_command(shell_t *shell, char *command);
+int execute(shell_t *shell);
 
-/** Getline **/
-void _fix(char **lineptr, size_t *n, char *ptr, size_t i);
-ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
+/* builtins */
+int (*get_builtin_handl(const char *cmd))(shell_t *shell);
+int hsh_exit(shell_t *shell);
+int hsh_env(shell_t *shell);
+int hsh_cd(shell_t *shell);
+int hsh_setenv(shell_t *shell);
+int hsh_unsetenv(shell_t *shell);
 
+/* utils */
+void prompt(void);
+char *read_line(int *chr);
+char **tokenize(char *s);
+char *analyze_cmd(shell_t *shell, char *cmd);
+char *exp_variables(shell_t *shell, char *s);
 
-#endif
+/* error */
+void write_error(shell_t *shell, int status);
+
+#endif /* SHELL_H */
