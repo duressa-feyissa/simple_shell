@@ -8,13 +8,13 @@
  */
 int main(int argc, char **argv)
 {
-	int pathv = 0, status = 1, isPath = 0;
+	int pathv = 0, status = 0, isPath = 0;
 	char *ptr = NULL, **cmds = NULL;
 	op_t obs;
 
 	_envStart(&obs);
 	(void)argc;
-	while (status)
+	while (1)
 	{
 		errno = 0;
 		ptr = _getcmd();
