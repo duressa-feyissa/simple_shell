@@ -9,7 +9,7 @@
 char *_line(int *chr)
 {
 	char *input = NULL;
-	size_t bufsize = SIZE;
+	size_t bufsize = BUFSIZE;
 
 	*chr = getline(&input, &bufsize, stdin);
 

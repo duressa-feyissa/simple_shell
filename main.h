@@ -68,7 +68,7 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 char *_strdup(char *str);
 char **_realloc2(char **ptr, unsigned int old_size, unsigned int new_size);
 
-char **_strtok(char *str);
+char **tokenize(char *s);
 void start(op_t *obs, char **argv);
 void _environ(op_t *obs);
 void unstart(op_t *obs);
