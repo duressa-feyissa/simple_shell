@@ -65,4 +65,15 @@ int (*find(char *str))(op_t *obs);
 int exitfun(op_t *obs);
 int envfun(op_t *obs);
 int ctrld(op_t *obs);
+
+/** Memory **/
+char *_strdup(char *str);
+void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
+char **_realloc2(char **ptr, unsigned int old_size, unsigned int new_size);
+void *_memcpy(void *dest, const void *src, size_t n);
+
+/** Getline **/
+void _fix(char **lineptr, size_t *n, char *ptr, size_t i);
+ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
+
 #endif
