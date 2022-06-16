@@ -12,7 +12,6 @@ int (*find(char *str))(op_t *obs)
 		{"env", envfun},
 		{"setenv", h_setenv},
 		{"unsetenv", h_unsetenv},
-		{"cd", cdfun},
 		{NULL, NULL}
 	};
 	unsigned int i;
