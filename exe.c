@@ -17,6 +17,7 @@ int _forkfun(char **cmd, char **av, char **en, char *l, int p, int c, op_t *o)
 	int status;
 	int (*hold)(op_t *shell);
 
+	o->envn = en;
 	o->argv = cmd;
 	o->count = p;
 	if (cmd[0] == NULL)

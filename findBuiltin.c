@@ -10,8 +10,6 @@ int (*find(char *str))(op_t *obs)
 	ph type[] = {
 		{"exit", exitfun},
 		{"env", envfun},
-		{"setenv", h_setenv},
-		{"unsetenv", h_unsetenv},
 		{NULL, NULL}
 	};
 	unsigned int i;
