@@ -13,6 +13,7 @@ int main(int argc, char **argv, char **env)
 	char *ptr = NULL, **cmds = NULL;
 	op_t obs;
 
+	_envStart(&obs, env);
 	(void)argc;
 	while (1)
 	{
