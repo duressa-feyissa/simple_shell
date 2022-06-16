@@ -4,16 +4,15 @@
  * main - Main Entry
  * @argc: argument count
  * @argv: argument vector
- * @env: enviromental variable
  * Return: 0
  */
-int main(int argc, char **argv, char **env)
+int main(int argc, char **argv)
 {
 	int pathv = 0, status = 0, isPath = 0;
 	char *ptr = NULL, **cmds = NULL;
 	op_t obs;
 
-	_envStart(&obs, env);
+	_envStart(&obs);
 	(void)argc;
 	while (1)
 	{
@@ -27,8 +26,8 @@ int main(int argc, char **argv, char **env)
 			cmds = _strtoken(ptr);
 			if (cmds == NULL)
 				free(ptr);
-			isPath = valuePath(&cmds[0], env);
-			status = _forkfun(cmds, argv, env, ptr, pathv, isPath, &obs);
+			isPath = valuePath(&cmds[0], obs.envn);
+			status = _forkfun(cmds, argv, obs.envn, ptr, pathv, isPath, &obs);
 			if (status == 200)
 			{
 				free(ptr);

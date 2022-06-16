@@ -42,6 +42,8 @@ typedef struct new
 	int (*find)(op_t *obs);
 } ph;
 
+extern char **environ;
+
 /** Setenv and Unsetenv **/
 int _setenv(op_t *obs, char *name, char *value, int overwrite);
 int _unsetenv(op_t *obs, const char *name);
@@ -65,7 +67,7 @@ void _getenv(char **env);
 char **_strtoken(char *str);
 int valuePath(char **av, char **env);
 int _forkfun(char **cmd, char **av, char **en, char *l, int p, int c, op_t *o);
-void _envStart(op_t *obs, char **env);
+void _envStart(op_t *obs);
 char *_getdone(op_t *obs, const char *name);
 void unstart(op_t *obs);
 

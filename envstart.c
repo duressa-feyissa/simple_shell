@@ -3,17 +3,16 @@
 /**
  * _envStart - Make copy of the environs
  * @obs: shell data
- * @env: enviromental variable
  *
  * Return: Void
  */
-void _envStart(op_t *obs, char **env)
+void _envStart(op_t *obs)
 {
 	unsigned int i;
 
 	obs->exCo = 0;
 	i = 0;
-	while (env[i])
+	while (environ[i])
 		i++;
 
 	obs->envn = malloc(sizeof(char *) * (i + 2));
@@ -24,9 +23,9 @@ void _envStart(op_t *obs, char **env)
 	}
 
 	i = 0;
-	while (env[i])
+	while (environ[i])
 	{
-		obs->envn[i] = _strdup(env[i]);
+		obs->envn[i] = _strdup(environ[i]);
 		i++;
 	}
 	obs->envn[i] = NULL;
