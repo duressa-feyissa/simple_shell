@@ -27,8 +27,8 @@ int main(int argc, char **argv)
 			cmds = _strtoken(ptr);
 			if (cmds == NULL)
 				free(ptr);
-			isPath = valuePath(&cmds[0], environ);
-			status = _forkfun(cmds, argv, environ, ptr, pathv, isPath, &obs);
+			isPath = valuePath(&cmds[0], obs.envn);
+			status = _forkfun(cmds, argv, obs.envn, ptr, pathv, isPath, &obs);
 			if (status == 200)
 			{
 				free(ptr);
