@@ -17,6 +17,7 @@ int _forkfun(char **cmd, char **av, char **en, char *l, int p, int c, op_t *o)
 	int status;
 	int (*hold)(op_t *shell);
 
+	(void)en;
 	o->argv = cmd;
 	o->count = p;
 	if (cmd[0] == NULL)
@@ -27,7 +28,7 @@ int _forkfun(char **cmd, char **av, char **en, char *l, int p, int c, op_t *o)
 	child = fork();
 	if (child == 0)
 	{
-		if (execve(cmd[0], cmd, en) == -1)
+		if (execve(cmd[0], cmd, o->envn) == -1)
 		{
 			perror(av[0]);
 			if (!c)
