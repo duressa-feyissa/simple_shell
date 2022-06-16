@@ -12,6 +12,8 @@ int main(int argc, char **argv, char **env)
 	int pathv = 0, status = 0, isPath = 0;
 	char *ptr = NULL, **cmds = NULL;
 	op_t obs;
+
+	_envStart(&obs, env);
 	(void)argc;
 	while (1)
 	{
@@ -44,5 +46,6 @@ int main(int argc, char **argv, char **env)
 		}
 		free(ptr);
 	}
-	return (0);
+	unstart(&obs);
+	return (obs.exCo);
 }

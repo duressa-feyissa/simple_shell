@@ -42,6 +42,12 @@ typedef struct new
 	int (*find)(op_t *obs);
 } ph;
 
+/** Setenv and Unsetenv **/
+int _setenv(op_t *obs, char *name, char *value, int overwrite);
+int _unsetenv(op_t *obs, const char *name);
+char *_getdone(op_t *obs, const char *name);
+int add_env(op_t *obs, const char *name, const char *value);
+
 /** String Handler**/
 int _strlen(char *s);
 char *_strcpy(char *dest, char *src);
@@ -59,12 +65,18 @@ void _getenv(char **env);
 char **_strtoken(char *str);
 int valuePath(char **av, char **env);
 int _forkfun(char **cmd, char **av, char **en, char *l, int p, int c, op_t *o);
+void _envStart(op_t *obs, char **env);
+char *_getdone(op_t *obs, const char *name);
+void unstart(op_t *obs);
 
 /** Builtin **/
 int (*find(char *str))(op_t *obs);
 int exitfun(op_t *obs);
+int h_setenv(op_t *obs);
 int envfun(op_t *obs);
 int ctrld(op_t *obs);
+int h_unsetenv(op_t *obs);
+int cdfun(op_t *obs);
 
 /** Memory **/
 char *_strdup(char *str);
@@ -75,5 +87,6 @@ void *_memcpy(void *dest, const void *src, size_t n);
 /** Getline **/
 void _fix(char **lineptr, size_t *n, char *ptr, size_t i);
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
+
 
 #endif
