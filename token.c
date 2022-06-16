@@ -1,47 +1,45 @@
 #include "main.h"
 
 /**
- * _strtok - String broken into smaller strings (tokens).
- * @str:
+ * tokenize - splits a string into an array
  *
- * Return: A pointer to the first token found in the string or NULL.
+ * @s: input string
+ * Return: an array
  */
-char **_strtok(char *str)
+char **tokenize(char *s)
 {
-	char **cmd;
+	char **argv;
 	char *token;
-	int i, size;
+	size_t bufsize, i;
 
-	if (!str)
-	{
-		return (NULL);
-	}
-
-	i = 0;
-	size = 0;
-	while (str[i])
-	{
-		if (str[i] == ' ')
-			size++;
-		i++;
-	}
-
-	if (_strlen(str) == (size + 1))
+	bufsize = TOKEN_BUFSIZE;
+	argv = malloc(sizeof(char *) * (bufsize));
+	if (!argv)
 		return (NULL);
 
-	cmd = malloc(sizeof(char *) * (size + 2));
-	if (cmd == NULL)
-		return (NULL);
-
-	i = 0;
-	token = strtok(str, " \n\t\r");
-	while (token)
+	token = strtok(s, TOKEN_DELIM);
+	if (!token)
 	{
-		cmd[i] = token;
-		token = strtok(NULL, " \n\t\r");
-		i++;
+		free(argv);
+		return (NULL);
 	}
-	cmd[i] = NULL;
+	argv[0] = token;
 
-	return (cmd);
+	for (i = 1; token; i++)
+	{
+		if (i == bufsize)
+		{
+			bufsize += TOKEN_BUFSIZE;
+			argv = _realloc2(argv, sizeof(char *) * i, sizeof(char *) * bufsize);
+			if (argv == NULL)
+			{
+				write(STDERR_FILENO, ": allocation error\n", 18);
+				exit(EXIT_FAILURE);
+			}
+		}
+		token = strtok(NULL, TOKEN_DELIM);
+		argv[i] = token;
+	}
+
+	return (argv);
 }

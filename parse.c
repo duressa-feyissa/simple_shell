@@ -13,7 +13,7 @@ int parse(op_t *obs, char *order)
 	int (*hold)(op_t *shell);
 
 	fl = 0;
-	obs->av = _strtok(order);
+	obs->av = tokenize(order);
 	if (obs->av == NULL)
 	{
 		free(obs->cmd);

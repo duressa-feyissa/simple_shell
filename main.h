@@ -1,8 +1,9 @@
 #ifndef _MAIN_
 #define _MAIN_
 
-#define SIZE 1024
-#define TOKEN_SIZE 128
+#define BUFSIZE 1024
+#define TOKEN_BUFSIZE 128
+#define TOKEN_DELIM " \t\r\n\a"
 
 #include <stdio.h>
 #include <stdlib.h>
