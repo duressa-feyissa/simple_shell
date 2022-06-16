@@ -11,6 +11,9 @@ void _envStart(op_t *obs)
 	unsigned int i;
 
 	obs->exCo = 0;
+	obs->cmd = NULL;
+	obs->name = '\0';
+	obs->count = 0;
 	i = 0;
 	while (environ[i])
 		i++;
