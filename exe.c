@@ -28,7 +28,7 @@ int _forkfun(char **cmd, char **av, char **en, char *l, int p, int c, op_t *o)
 	child = fork();
 	if (child == 0)
 	{
-		if (execve(cmd[0], cmd, environ) == -1)
+		if (execve(cmd[0], cmd, en) == -1)
 		{
 			perror(av[0]);
 			if (!c)
