@@ -1,5 +1,5 @@
 #include "shell.h"
-
+#include "util.h"
 /**
  * start - setup shell variables
  * @obs: shell data

@@ -1,4 +1,5 @@
 #include "shell.h"
+#include "util.h"
 
 /**
  * _fix - assigns value

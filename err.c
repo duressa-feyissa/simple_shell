@@ -1,5 +1,5 @@
 #include "shell.h"
-
+#include "_string.h"
 /**
  * error_message - displays error message to terminal
  * @obs: shell data

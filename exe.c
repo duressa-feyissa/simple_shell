@@ -1,5 +1,7 @@
 #include "shell.h"
-
+#include "util.h"
+#include "_string.h"
+#include <string.h>
 /**
  * _which - find the file for a command
  *

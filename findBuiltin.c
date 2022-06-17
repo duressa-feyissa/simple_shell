@@ -1,4 +1,5 @@
 #include "shell.h"
+#include "_string.h"
 
 /**
  * find - find which builtin function

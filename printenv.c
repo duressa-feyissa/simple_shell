@@ -1,4 +1,5 @@
 #include "shell.h"
+#include "_string.h"
 
 /**
  * envfun - Print the environment variables.

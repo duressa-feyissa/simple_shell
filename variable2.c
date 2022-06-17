@@ -1,5 +1,7 @@
 #include "shell.h"
 #include "variable.h"
+#include "_string.h"
+#include <string.h>
 
 /**
  * free_varlist - frees the variable single linked list

@@ -1,4 +1,5 @@
 #include "shell.h"
+#include "util.h"
 
 /**
  * remove_comment - removes comments from s.

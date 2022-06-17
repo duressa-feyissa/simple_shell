@@ -12,7 +12,6 @@
 #include <sys/wait.h>
 #include <unistd.h>
 #include <signal.h>
-#include <string.h>
 
 /**
  * struct op - shell data for current session
@@ -54,42 +53,14 @@ void unstart(op_t *obs);
 void handle(int sig);
 void entry(op_t *obs);
 
-/** String header file **/
-int _strlen(char *s);
-char *_strcpy(char *dest, char *src);
-char *_strncpy(char *dest, char *src, int n);
-char *_strcat(char *dest, char *src);
-char *_strncat(char *dest, char *src, int n);
-int _strcmp(char *s1, char *s2);
-size_t _strncmp(char *s1, char *s2, size_t n);
-int _isdigit(char *c);
-int _atoi(char *s);
-char *_itoa(int n);
-int _intlen(int n);
-
-/** Memory allocation **/
-void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
-char *_strdup(char *str);
-char **_realloc2(char **ptr, unsigned int old_size, unsigned int new_size);
+char *_getenv(char **_environ, const char *name);
 
 int parse(op_t *obs, char *order);
 int _exe(op_t *obs);
 
-/** builtin **/
 int (*find(char *str))(op_t *obs);
 int exitfun(op_t *obs);
 int envfun(op_t *obs);
-char *_getenv(char **_environ, const char *name);
-int _setenv(op_t *obs, const char *name, const char *value, int overwrite);
-int add_env(op_t *obs, const char *name, const char *value);
-int _unsetenv(op_t *obs, const char *name);
-int h_unsetenv(op_t *obs);
-int h_setenv(op_t *obs);
-int cdfun(op_t *obs);
-
-/** getline **/
-ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
-void _fix(char **lineptr, size_t *n, char *ptr, size_t i);
 
 void prompt(void);
 char *_line(int *chr);
