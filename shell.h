@@ -66,6 +66,7 @@ int h_unsetenv(op_t *obs);
 int h_setenv(op_t *obs);
 int _setenv(op_t *obs, char *name, char *value, int overwrite);
 int _unsetenv(op_t *obs, const char *name);
+int cdfun(op_t *obs);
 
 void prompt(void);
 char *_line(int *chr);
