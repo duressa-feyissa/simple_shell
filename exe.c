@@ -139,11 +139,11 @@ int _exe(op_t *obs)
 	{
 		execve(doc, obs->av, obs->env);
 	}
-        else if (pid < 0)
-        {
-                perror(obs->av[0]);
-                return (1);
-        }
+	else if (pid < 0)
+	{
+		perror(obs->av[0]);
+		return (1);
+	}
 	else
 	{
 		do {

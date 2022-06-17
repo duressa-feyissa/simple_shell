@@ -15,7 +15,7 @@ int parse(op_t *obs, char *order)
 	fl = 0;
 	if (!order)
 		return (0);
-        obs->cmd = order;
+	obs->cmd = order;
 	obs->av = tokenize(order);
 	if (obs->av == NULL)
 	{
