@@ -34,6 +34,8 @@ int parse(op_t *obs, char *order)
 		fl = _exe(obs);
 
 	free(obs->av);
+	free(obs->cmd);
+	(obs->count)++;
 
 	return (fl);
 }
