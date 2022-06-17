@@ -53,6 +53,7 @@ extern char **environ;
 void handle(int sig);
 void entry(op_t *obs);
 
+char *_getdone(op_t *obs, const char *name);
 char *_getenv(char **_environ, const char *name);
 
 int parse(op_t *obs, char *order);
@@ -61,6 +62,10 @@ int _exe(op_t *obs);
 int (*find(char *str))(op_t *obs);
 int exitfun(op_t *obs);
 int envfun(op_t *obs);
+int h_unsetenv(op_t *obs);
+int h_setenv(op_t *obs);
+int _setenv(op_t *obs, char *name, char *value, int overwrite);
+int _unsetenv(op_t *obs, const char *name);
 
 void prompt(void);
 char *_line(int *chr);
