@@ -6,7 +6,7 @@
  *
  * Return: The length of string passed
  */
-int _strlen(char *s)
+int _strlen(const char *s)
 {
 	int i;
 
