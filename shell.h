@@ -20,7 +20,7 @@
  *
  * @av: argument vector
  * @cmd: input command
- * @env: env variables
+ * @environ: env variables
  * @name: the program name
  * @exCo: exit value
  * @count: counts number of processes
