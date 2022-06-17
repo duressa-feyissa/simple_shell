@@ -13,6 +13,7 @@ int parse(op_t *obs, char *order)
 	int (*hold)(op_t *shell);
 
 	fl = 0;
+	order = analyze(obs, order);
 	if (!order)
 		return (0);
 	obs->cmd = order;

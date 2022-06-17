@@ -55,7 +55,7 @@ int cdfun(op_t *obs)
 
 	if (ac > 2)
 	{
-		write_err(obs, 2);;
+		write_err(obs, 2);
 	}
 
 	ptr = getcwd(ch, 128);

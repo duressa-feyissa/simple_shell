@@ -48,6 +48,22 @@ typedef struct new
 	int (*find)(op_t *obs);
 } ph;
 
+/**
+ * struct var - variable
+ *
+ * @value: value
+ * @len: length of the value
+ * @len_var: length of equivalent variable
+ * @next: pointer to next
+ */
+typedef struct var
+{
+	char *value;
+	size_t len;
+	size_t len_var;
+	struct var *next;
+} var_t;
+
 extern char **environ;
 
 void handle(int sig);
@@ -91,5 +107,10 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 char **_realloc2(char **ptr, unsigned int old_size, unsigned int new_size);
 void assign_lineptr(char **lineptr, size_t *n, char *buffer, size_t count);
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
+
+char *analyze(op_t *obs, char *cmd);
+char *exp_variables(op_t *obs, char *s);
+void free_varlist(var_t **h);
+var_t *add_varnode(var_t **h, char *value, int len_var);
 
 #endif
