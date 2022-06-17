@@ -133,15 +133,16 @@ int _exe(op_t *obs)
 	if (check_error(obs, doc) == 1)
 		return (1);
 	pid = fork();
-	if (pid < 0)
-	{
-		perror(obs->av[0]);
-		return (1);
-	}
-	else if (pid == 0)
+
+	if (pid == 0)
 	{
 		execve(doc, obs->av, obs->env);
 	}
+        else if (pid < 0)
+        {
+                perror(obs->av[0]);
+                return (1);
+        }
 	else
 	{
 		do {

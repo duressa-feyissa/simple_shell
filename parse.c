@@ -1,4 +1,5 @@
 #include "shell.h"
+#include "util.h"
 
 /**
  * parse - parse the command input from stdin

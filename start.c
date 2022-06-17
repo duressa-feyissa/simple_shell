@@ -1,5 +1,5 @@
 #include "shell.h"
-#include "util.h"
+#include "_string.h"
 /**
  * start - setup shell variables
  * @obs: shell data
@@ -47,6 +47,7 @@ void unstart(op_t *obs)
 {
 	unsigned int i;
 
+	free(obs->pid);
 	for (i = 0; obs->env[i]; i++)
 	{
 		free(obs->env[i]);
