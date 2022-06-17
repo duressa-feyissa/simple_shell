@@ -7,13 +7,13 @@
  * @command: command input
  * Return: 0 on failure otherwise 1
  */
-char *_whichPath(op_t *obs, char *command)
+char *_which(char **env, char *command)
 {
 	char *str, *str_dup, *spath, *doc;
 	int len_spath, len_cmd;
 	struct stat st;
 
-	str = _getenv(obs->env, "PATH");
+	str = _getenv(env, "PATH");
 	if (str == NULL)
 		return (NULL);
 	if (command[0] == '/')
@@ -121,7 +121,7 @@ int _exe(op_t *obs)
 	}
 	else
 	{
-		doc = _whichPath(obs, obs->av[0]);
+		doc = _which(obs->env, obs->av[0]);
 		if (!doc)
 		{
 			write_err(obs, 127);
