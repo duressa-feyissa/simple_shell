@@ -16,13 +16,12 @@ void start(op_t *obs, char **argv)
 	obs->name = argv[0];
 	obs->exCo = 0;
 	obs->count = 1;
-	obs->pid = _itoa(getpid());
 
 	i = 0;
 	while (environ[i])
 		i++;
-	obs->env = malloc(sizeof(char *) * (i + 1));
-	if (obs->env == NULL)
+	obs->environ = malloc(sizeof(char *) * (i + 1));
+	if (obs->environ == NULL)
 	{
 		write(STDERR_FILENO, "Error\n", 7);
 		return;
@@ -31,10 +30,10 @@ void start(op_t *obs, char **argv)
 	i = 0;
 	while (environ[i])
 	{
-		obs->env[i] = _strdup(environ[i]);
+		obs->environ[i] = _strdup(environ[i]);
 		i++;
 	}
-	obs->env[i] = NULL;
+	obs->environ[i] = NULL;
 }
 
 /**
@@ -47,10 +46,9 @@ void unstart(op_t *obs)
 {
 	unsigned int i;
 
-	free(obs->pid);
-	for (i = 0; obs->env[i]; i++)
+	for (i = 0; obs->environ[i]; i++)
 	{
-		free(obs->env[i]);
+		free(obs->environ[i]);
 	}
-	free(obs->env);
+	free(obs->environ);
 }

@@ -12,7 +12,7 @@ int envfun(op_t *obs)
 	char **env1;
 	int i;
 
-	env1 = obs->env;
+	env1 = obs->environ;
 	i = 0;
 	while (env1[i])
 	{

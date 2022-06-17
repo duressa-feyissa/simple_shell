@@ -30,7 +30,7 @@ typedef struct op
 {
 	char **av;
 	char *cmd;
-	char **env;
+	char **environ;
 	char *name;
 	int exCo;
 	int count;

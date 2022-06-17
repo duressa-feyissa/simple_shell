@@ -3,17 +3,17 @@
 /**
  * _which - find the file for a command
  *
- * @env: environ
+ * @envn: environ
  * @command: command input
  * Return: 0 on failure otherwise 1
  */
-char *_which(char **env, char *command)
+char *_which(char **envn, char *command)
 {
 	char *str, *str_dup, *spath, *doc;
 	int len_spath, len_cmd;
 	struct stat st;
 
-	str = _getenv(env, "PATH");
+	str = _getenv(envn, "PATH");
 	if (str == NULL)
 		return (NULL);
 	if (command[0] == '/')
@@ -124,7 +124,7 @@ int _exe(op_t *obs)
 	}
 	else
 	{
-		doc = _which(obs->env, obs->av[0]);
+		doc = _which(obs->environ, obs->av[0]);
 		if (!doc)
 		{
 			write_err(obs, 127);
@@ -137,7 +137,7 @@ int _exe(op_t *obs)
 
 	if (pid == 0)
 	{
-		execve(doc, obs->av, obs->env);
+		execve(doc, obs->av, obs->environ);
 	}
 	else if (pid < 0)
 	{
