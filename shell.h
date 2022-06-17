@@ -36,8 +36,6 @@ typedef struct op
 	char *pid;
 } op_t;
 
-extern char **environ;
-
 /**
  * struct new - struct data
  * @s: string address holder
@@ -49,6 +47,12 @@ typedef struct new
 	int (*find)(op_t *obs);
 } ph;
 
+extern char **environ;
+
+void start(op_t *obs, char **argv);
+void unstart(op_t *obs);
+void handle(int sig);
+void entry(op_t *obs);
 
 /** String header file **/
 int _strlen(char *s);
@@ -68,13 +72,6 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 char *_strdup(char *str);
 char **_realloc2(char **ptr, unsigned int old_size, unsigned int new_size);
 
-char **tokenize(char *s);
-void start(op_t *obs, char **argv);
-void _environ(op_t *obs);
-void unstart(op_t *obs);
-void prompt(void);
-char *_line(int *chr);
-void entry(op_t *obs);
 int parse(op_t *obs, char *order);
 int _exe(op_t *obs);
 
@@ -90,23 +87,16 @@ int h_unsetenv(op_t *obs);
 int h_setenv(op_t *obs);
 int cdfun(op_t *obs);
 
-/** signal handler **/
-void handle(int sig);
-
-/** error **/
-void error_message(op_t *obs, char *message, int status);
-void write_err(op_t *obs, int status);
-char *cd_error(op_t *obs);
-char *exit_error(op_t *obs);
-
 /** getline **/
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
 void _fix(char **lineptr, size_t *n, char *ptr, size_t i);
 
 void prompt(void);
-char *read_line(int *chr);
+char *_line(int *chr);
 char **tokenize(char *s);
 char *analyze_cmd(op_t *obs, char *cmd);
 char *exp_variables(op_t *obs, char *s);
+
+void write_err(op_t *obs, int status);
 
 #endif
