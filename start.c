@@ -1,4 +1,4 @@
-#include "main.h"
+#include "shell.h"
 
 /**
  * start - setup shell variables
@@ -18,24 +18,23 @@ void start(op_t *obs, char **argv)
 	obs->count = 1;
 	obs->pid = _itoa(getpid());
 
-        i = 0;
-        while (environ[i])
-                i++;
+	i = 0;
+	while (environ[i])
+		i++;
+	obs->env = malloc(sizeof(char *) * (i + 1));
+	if (obs->env == NULL)
+	{
+		write(STDERR_FILENO, "Error\n", 7);
+		return;
+	}
 
-        obs->env = malloc(sizeof(char *) * (i + 1));
-        if (obs->env == NULL)
-        {
-                write(STDERR_FILENO, "Error\n", 7);
-                return;
-        }
-
-        i = 0;
-        while (environ[i])
-        {
-                obs->env[i] = _strdup(environ[i]);
-                i++;
-        }
-        obs->env[i] = NULL;
+	i = 0;
+	while (environ[i])
+	{
+		obs->env[i] = _strdup(environ[i]);
+		i++;
+	}
+	obs->env[i] = NULL;
 }
 
 /**

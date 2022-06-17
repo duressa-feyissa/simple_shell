@@ -1,4 +1,4 @@
-#include "main.h"
+#include "shell.h"
 
 /**
  * remove_comment - removes comments from s.
@@ -37,7 +37,7 @@ char *remove_comment(char *s)
 /**
  * analyze_cmd - performs comment removal and variable expansion
  * on string
- * @shell: shell data
+ * @obs: shell data
  * @cmd: command input
  * Return: String without comment
  * If there is no string return NULL

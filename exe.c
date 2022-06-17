@@ -1,9 +1,9 @@
-#include "main.h"
+#include "shell.h"
 
 /**
- * _whichPath - find the file for a command
+ * _which - find the file for a command
  *
- * @obs: shell data
+ * @env: environ
  * @command: command input
  * Return: 0 on failure otherwise 1
  */

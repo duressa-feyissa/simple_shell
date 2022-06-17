@@ -1,4 +1,4 @@
-#include "main.h"
+#include "shell.h"
 
 /**
  *  _line - reads characters from the standard input

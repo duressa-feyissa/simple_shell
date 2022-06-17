@@ -1,4 +1,4 @@
-#include "main.h"
+#include "shell.h"
 
 /**
  * env_cmp - compares a name with env key

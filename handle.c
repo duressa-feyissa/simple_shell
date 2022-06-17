@@ -1,4 +1,4 @@
-#include "main.h"
+#include "shell.h"
 
 /**
  * handle - Handle Ctrl + c call in prompt.

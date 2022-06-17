@@ -1,4 +1,4 @@
-#include "main.h"
+#include "shell.h"
 
 /**
  * error_message - displays error message to terminal
