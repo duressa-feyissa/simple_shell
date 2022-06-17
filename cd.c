@@ -21,7 +21,7 @@ int cd_one(op_t *obs)
 	{
 		x = chdir(new);
 		if (x == -1)
-			perror(obs->name);
+			write_err(obs, 2);
 		else
 		{
 			str = getcwd(ch1, 128);
@@ -55,7 +55,7 @@ int cdfun(op_t *obs)
 
 	if (ac > 2)
 	{
-		perror(obs->name);
+		write_err(obs, 2);;
 	}
 
 	ptr = getcwd(ch, 128);
@@ -63,7 +63,7 @@ int cdfun(op_t *obs)
 	{
 		home = _getdone(obs, "HOME");
 		if (chdir(home) == -1)
-			perror(obs->name);
+			 write_err(obs, 2);
 		free(home);
 	}
 	else if (ac == 2 && (strcmp(av[1], "-") == 0))

@@ -1,5 +1,4 @@
 #include "shell.h"
-
 /**
  * makeenv - create an environment variable
  *
