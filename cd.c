@@ -59,7 +59,7 @@ int cdfun(op_t *obs)
 	}
 
 	ptr = getcwd(ch, 128);
-	if (ac == 1)
+	if (ac == 1 || (ac == 2 && (strcmp(av[1], "~") == 0)))
 	{
 		home = _getdone(obs, "HOME");
 		if (chdir(home) == -1)
