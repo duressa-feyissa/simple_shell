@@ -53,6 +53,26 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 }
 
 /**
+ * _memcpy - copy memory area
+ *
+ * @dest: destination memory
+ * @src: source memory
+ * @n: bytes to copy
+ * Return: pointer to the destination memory
+ */
+void *_memcpy(void *dest, const void *src, size_t n)
+{
+	char *dest_ptr = (char *) dest;
+	char *src_ptr = (char *) src;
+	unsigned int i;
+
+	for (i = 0; i < n; i++)
+		dest_ptr[i] = src_ptr[i];
+
+	return (dest_ptr);
+}
+
+/**
  * *_strdup - a function that duplicates a string
  *
  * @str: input string to duplicate
@@ -60,30 +80,17 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
  * Return: NULL if str == NULL
  *         @str
 */
-
-char *_strdup(char *str)
+char *_strdup(const char *s)
 {
-	int i = 0, l = 0;
-	char *s;
+	size_t len;
+	char *dup;
 
-	if (str == NULL)
+	len = _strlen(s);
+	dup = malloc(sizeof(char) * (len + 1));
+	if (dup == NULL)
 		return (NULL);
-
-	/*calculate size of str*/
-	while (str[l] != '\0')
-		l++;
-
-	s = malloc((l + 1) * sizeof(char));
-	if (s == NULL)
-		return (NULL);
-
-	while (str[i] != '\0')
-	{
-		s[i] = str[i];
-		i++;
-	}
-
-	return (s);
+	_memcpy(dup, s, len + 1);
+	return (dup);
 }
 
 /**
