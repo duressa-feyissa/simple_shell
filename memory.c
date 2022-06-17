@@ -75,7 +75,7 @@ void *_memcpy(void *dest, const void *src, size_t n)
 /**
  * *_strdup - a function that duplicates a string
  *
- * @str: input string to duplicate
+ * @s: input string to duplicate
  *
  * Return: NULL if str == NULL
  *         @str
