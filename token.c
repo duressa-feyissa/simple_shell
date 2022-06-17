@@ -1,5 +1,4 @@
 #include "shell.h"
-#include "util.h"
 #include <string.h>
 
 /**

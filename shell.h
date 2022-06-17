@@ -12,6 +12,8 @@
 #include <sys/wait.h>
 #include <unistd.h>
 #include <signal.h>
+#include <string.h>
+#include <limits.h>
 
 /**
  * struct op - shell data for current session
@@ -65,9 +67,25 @@ int envfun(op_t *obs);
 void prompt(void);
 char *_line(int *chr);
 char **tokenize(char *s);
-char *analyze_cmd(op_t *obs, char *cmd);
-char *exp_variables(op_t *obs, char *s);
 
 void write_err(op_t *obs, int status);
+
+char *_strdup(char *str);
+int _strlen(char *s);
+char *_strcpy(char *dest, char *src);
+char *_strncpy(char *dest, char *src, int n);
+char *_strcat(char *dest, char *src);
+char *_strncat(char *dest, char *src, int n);
+int _strcmp(char *s1, char *s2);
+size_t _strncmp(char *s1, char *s2, size_t n);
+int _isdigit(char *c);
+int _atoi(char *s);
+char *_itoa(int n);
+int _intlen(int n);
+
+void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
+char **_realloc2(char **ptr, unsigned int old_size, unsigned int new_size);
+void assign_lineptr(char **lineptr, size_t *n, char *buffer, size_t count);
+ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
 
 #endif

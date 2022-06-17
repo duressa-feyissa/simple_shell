@@ -1,5 +1,5 @@
 #include "shell.h"
-#include "_string.h"
+
 /**
  * exitfun - exit function
  * @obs: shell data

@@ -1,7 +1,5 @@
 #include "shell.h"
-#include "util.h"
-#include "_string.h"
-#include <string.h>
+
 /**
  * _which - find the file for a command
  *
@@ -25,7 +23,7 @@ char *_which(char **env, char *command)
 	str_dup = _strdup(str);
 	len_cmd = _strlen(command);
 	spath = strtok(str_dup, ":");
-	while (spath)
+	while (spath != NULL)
 	{
 		len_spath = _strlen(spath);
 		doc = malloc(sizeof(char) * (len_spath + len_cmd + 2));
@@ -77,7 +75,10 @@ int check_exe(char *str)
 		i++;
 	}
 	if (stat(str, &st) == 0)
+	{
 		return (0);
+	}
+
 	return (1);
 }
 
@@ -113,7 +114,7 @@ int check_error(op_t *obs, char *doc)
 int _exe(op_t *obs)
 {
 	pid_t pid;
-	int status, fl;
+	int sys, fl;
 	char *doc;
 
 	fl = check_exe(obs->av[0]);
@@ -146,10 +147,10 @@ int _exe(op_t *obs)
 	else
 	{
 		do {
-			waitpid(pid, &status, WUNTRACED);
-		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
+			waitpid(pid, &sys, WUNTRACED);
+		} while (!WIFEXITED(sys) && !WIFSIGNALED(sys));
 	}
 	free(doc);
-	obs->exCo = status / 256;
+	obs->exCo = sys / 256;
 	return (1);
 }

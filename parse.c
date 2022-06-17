@@ -1,5 +1,4 @@
 #include "shell.h"
-#include "util.h"
 
 /**
  * parse - parse the command input from stdin
@@ -14,10 +13,9 @@ int parse(op_t *obs, char *order)
 	int (*hold)(op_t *shell);
 
 	fl = 0;
-	order = analyze_cmd(obs, order);
 	if (!order)
 		return (0);
-	obs->cmd = order;
+        obs->cmd = order;
 	obs->av = tokenize(order);
 	if (obs->av == NULL)
 	{

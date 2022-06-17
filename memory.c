@@ -1,6 +1,4 @@
 #include "shell.h"
-#include "util.h"
-#include "string.h"
 
 /**
  * _realloc - A function that reallocates a memory block
