@@ -16,6 +16,7 @@ int parse(op_t *obs, char *order)
 	order = analyze_cmd(obs, order);
 	if (!order)
 		return (0);
+	obs->cmd = order;
 	obs->av = tokenize(order);
 	if (obs->av == NULL)
 	{
