@@ -50,8 +50,6 @@ typedef struct new
 
 extern char **environ;
 
-void start(op_t *obs, char **argv);
-void unstart(op_t *obs);
 void handle(int sig);
 void entry(op_t *obs);
 
